@@ -1,26 +1,21 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import { Navbar } from './src/Navbar'
 import { AddTodo } from './src/AddTodo'
 import { Todo } from './src/Todo'
 
 export default function App() {
-  const [todos, setTodos] = useState([])
+  const [todos, setTodos] = useState([
+    { id: 1, title: 'test' },
+    { id: 2, title: 'test' },
+    { id: 3, title: 'test' },
+    { id: 4, title: 'test' },
+    { id: 5, title: 'test' },
+    { id: 6, title: 'test' },
+    { id: 7, title: 'test' }
+  ])
 
   const addTodo = title => {
-    // const newTodo = {
-    //   id: Date.now().toString(),
-    //   title: title
-    // }
-
-    // setTodos(todos.concat([ newTodo ]))
-    // setTodos((prevTodos) => {
-    //   return [
-    //     ...prevTodos,
-    //     newTodo
-    //   ]
-    // })
-
     setTodos(prev => [
       ...prev,
       {
