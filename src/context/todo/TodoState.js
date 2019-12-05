@@ -9,7 +9,8 @@ import {
   SHOW_LOADER,
   HIDE_LOADER,
   SHOW_ERROR,
-  CLEAR_ERROR
+  CLEAR_ERROR,
+  FETCH_TODOS
 } from '../types'
 import { ScreenContext } from '../screen/screenContext'
 
@@ -58,6 +59,20 @@ export const TodoState = ({ children }) => {
     )
   }
 
+  const fetchTodos = async () => {
+    const response = await fetch(
+      'https://rn-todo-app-2f157.firebaseio.com/todos.json',
+      {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      }
+    )
+    const data = await response.json()
+    console.log('Fetch data', data)
+    const todos = Object.keys(data).map(key => ({ ...data[key], id: key }))
+    setTimeout(() => dispatch({ type: FETCH_TODOS, todos }), 5000)
+  }
+
   const updateTodo = (id, title) => dispatch({ type: UPDATE_TODO, id, title })
 
   const showLoader = () => dispatch({ type: SHOW_LOADER })
@@ -72,9 +87,12 @@ export const TodoState = ({ children }) => {
     <TodoContext.Provider
       value={{
         todos: state.todos,
+        loading: state.loading,
+        error: state.error,
         addTodo,
         removeTodo,
-        updateTodo
+        updateTodo,
+        fetchTodos
       }}
     >
       {children}
