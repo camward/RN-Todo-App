@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { StyleSheet, View, Button, Dimensions } from 'react-native'
+import { StyleSheet, View, Dimensions } from 'react-native'
 import { FontAwesome, AntDesign } from '@expo/vector-icons'
 import { THEME } from '../theme'
 import { AppCard } from '../components/ui/AppCard'

@@ -33,7 +33,7 @@ export const TodoState = ({ children }) => {
       )
       dispatch({ type: ADD_TODO, title, id: data.name })
     } catch (e) {
-      showError('Что-то пошло не так')
+      showError('Что-то пошло не так...')
     }
   }
 
@@ -70,10 +70,10 @@ export const TodoState = ({ children }) => {
       const data = await Http.get(
         'https://rn-todo-app-2f157.firebaseio.com/todos.json'
       )
-      const todos = Object.keys(data).map(key => ({ ...data[key], id: key }))
+      const todos = (data !== null) ? Object.keys(data).map(key => ({ ...data[key], id: key })) : []
       dispatch({ type: FETCH_TODOS, todos })
     } catch (e) {
-      showError('Что-пошло не так...')
+      showError('Что-то пошло не так...')
       console.log(e)
     } finally {
       hideLoader()
@@ -84,11 +84,12 @@ export const TodoState = ({ children }) => {
     clearError()
     try {
       await Http.patch(
-        `https://rn-todo-app-2f157.firebaseio.com/todos/${id}.json`
+        `https://rn-todo-app-2f157.firebaseio.com/todos/${id}.json`,
+          {id, title}
       )
       dispatch({ type: UPDATE_TODO, id, title })
     } catch (e) {
-      showError('Что-пошло не так...')
+      showError('Что-то пошло не так...')
       console.log(e)
     }
   }
